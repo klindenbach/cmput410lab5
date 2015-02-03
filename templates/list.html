@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tasks</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <form method="POST" action="/add">
+
+        Category <input type="text" name="category" /> <br />
+        Priority <input type="text" name="priority" /> <br />
+        Description <input type="text" name="description" /> <br />
+
+        <input type="submit" name="submit" value="Add" /> <br /> <br/>
+
+        <table border="1">
+            <tr>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Description</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                {% for field in task %}
+                <td>{{ field }}</td>
+                {% endfor %}
+            <tr>
+            {% endfor %}
+        </table>
+
+
+    </form>
+</body>
+</html>
