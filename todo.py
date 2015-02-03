@@ -3,6 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 app.debug = True
+app.config['SERVER_NAME'] = '127.0.0.1:8888'
 
 DATABASE = 'tasks.db'
 
@@ -26,7 +27,7 @@ def query_db(query, args=(), one=False):
 
 @app.route('/')
 def list():
-    tasks = query_db("select category, description, priority from tasks")
+    tasks = query_db("select id, category, priority, description from tasks")
     print tasks
     for task in tasks:
         for field in task:
@@ -35,6 +36,11 @@ def list():
 
 @app.route('/add', methods=['POST'])
 def add():
+    try:
+        int(request.form['priority'])
+    except:
+        return "Priority not an integer"
+
     category = request.form['category']
     description = request.form['description']
     priority = request.form['priority']
@@ -42,6 +48,12 @@ def add():
             "insert into tasks (category, description, priority) values(?,?,?)",
             [category, description, priority]
     )
+    get_db().commit()
+    return redirect(url_for('list'))
+
+@app.route('/delete/<id>', methods=['POST'])
+def delete(id):
+    query_db("delete from tasks where id=?", id)
     get_db().commit()
     return redirect(url_for('list'))
 

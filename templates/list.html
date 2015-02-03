@@ -5,6 +5,31 @@
     <meta charset="UTF-8" />
 </head>
 <body>
+    <script>
+        function post(path, params, method) {
+            method = method || "post"; // Set method to post by default if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                 }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
     <form method="POST" action="/add">
 
         Category <input type="text" name="category" /> <br />
@@ -12,6 +37,7 @@
         Description <input type="text" name="description" /> <br />
 
         <input type="submit" name="submit" value="Add" /> <br /> <br/>
+    </form>
 
         <table border="1">
             <tr>
@@ -21,14 +47,18 @@
             </tr>
             {% for task in tasks %}
             <tr>
-                {% for field in task %}
+                {% for field in task[1:] %}
                 <td>{{ field }}</td>
                 {% endfor %}
-            <tr>
+                <td>
+                    <form method="POST" action="/delete/{{ task[0] }}">
+                    <input type="submit" name="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
             {% endfor %}
         </table>
 
 
-    </form>
 </body>
 </html>
