@@ -1,0 +1,11 @@
+<link rel="stylesheet" type="text/css" href="static/style.css" />
+<h1>TODO-List</h1>
+{{ session['loggedIn'] }}
+{% if session['user'] %}
+<a class="login" href="/logout">logout</a>
+{% else %}
+<a class="login" href="/login">login</a>
+{% endif %}
+{% if error %}
+<span class="error">{{error}}</span> <br/> <br/>
+{% endif %}

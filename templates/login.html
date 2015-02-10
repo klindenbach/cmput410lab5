@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+</head>
+<body>
+    {% include 'layout.html' %}
+    <form method="post" action="/login">
+        Username: <input name="username" /> <br />
+        Password: <input name="password" type="password" />
+        <input type="submit" value="Submit" name="submit" />
+    </form>
+</body>
+</html>

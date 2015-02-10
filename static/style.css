@@ -1,0 +1,12 @@
+h1 {
+    color: blue ;
+}
+
+.login {
+    float: right;
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
